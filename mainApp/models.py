@@ -15,13 +15,14 @@ class Group(models.Model):
     color = models.CharField(max_length=7)
 
     class Meta:
+        unique_together = (('id', 'name'),)
         ordering = ('id',)
 
 
 class Reference(models.Model):
     name = models.TextField()
     url = models.URLField()
-    group = models.ManyToManyField('Group')
+    group = models.ForeignKey('Group', related_name='groups', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='references', on_delete=models.CASCADE)
 
     class Meta:

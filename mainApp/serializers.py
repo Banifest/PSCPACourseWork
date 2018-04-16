@@ -15,13 +15,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ('name', 'priority', 'color')
+        fields = ('id', 'name', 'priority', 'color')
 
 
 class ReferenceSerializer(serializers.HyperlinkedModelSerializer):
-    snippets = serializers.HyperlinkedRelatedField(
-        many=True, view_name='snippet-detail', read_only=True)
+    user = serializers.ReadOnlyField(source='user.username')
+    group = serializers.ReadOnlyField(source='group.id')
 
     class Meta:
         model = Reference
-        fields = ('url', 'id', 'name', 'group')
+        fields = ('id', 'url', 'name', 'group', 'user')
