@@ -17,9 +17,7 @@ router.register(r'references', views.ReferenceViewSet)
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
-    url(r'^reg|reg.html$', views.RegView.as_view(), name='RegView'),
-    url(r'^main|main.html$', views.MainView.as_view(), name='MainView'),
-    url(r'^/|index|index.html$', views.IndexView.as_view(), name='index'),
+
 ]
 
 #urlpatterns = [

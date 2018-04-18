@@ -17,7 +17,7 @@ class Group(models.Model):
 
     class Meta:
         unique_together = (('id', 'name'),)
-        ordering = ('id',)
+        ordering = ('priority',)
 
 
 class Reference(models.Model):

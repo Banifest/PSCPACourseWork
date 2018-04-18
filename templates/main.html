@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{}</title>
+    <title>{{ user.username }}</title>
 </head>
 <body>
-    <h1>Hello user</h1>
+    <p> {{ references.count }}</p>
+    {% for reference in references%}
+        <div>
+            <p> {{ reference.url }}</p>
+        </div>
+    {% endfor %}
 </body>
 </html>
