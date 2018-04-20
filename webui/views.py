@@ -1,9 +1,12 @@
+import requests
 from django.contrib.auth import login, authenticate
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.views.generic import TemplateView
+
+from webui.req import BASE_API_URL
 
 
 class AuthView(TemplateView):
@@ -14,7 +17,7 @@ class AuthView(TemplateView):
         if user is not None:
             # the password verified for the user
             if user.is_active:
-                login(request, user )
+                login(request, user)
                 return redirect('/main/', permanent=True)
             else:
                 return redirect('/auth/', permanent=True)
@@ -22,6 +25,11 @@ class AuthView(TemplateView):
             # the authentication system was unable to verify the username and password
             return redirect('/auth/', permanent=True)
 
+    def delete(self, request: HttpRequest) -> HttpResponse:
+        pass
+
+class LogOut(TemplateView):
+    template_name = 'auth.html'
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -42,9 +50,21 @@ class MainView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_active:
+            user = requests.request(
+                    'GET',
+                    'http://127.0.0.1:8000/api/users/1/',
+                    cookies=request.COOKIES,
+            ).json()
+
+            references = requests.request(
+                    'GET',
+                    'http://127.0.0.1:8000/api/references/',
+                    cookies=request.COOKIES,
+            ).json()
+
             return self.render_to_response({})
-            #user = User.objects.filter(id=request.user.id)
-            #references = Reference.objects.filter(user=user[0]).all()
-            #return self.render_to_response({'references': references, user: user, })
+            # user = User.objects.filter(id=request.user.id)
+            # references = Reference.objects.filter(user=user[0]).all()
+            # return self.render_to_response({'references': references, user: user, })
         else:
             return redirect('/main/', permanent=True)
