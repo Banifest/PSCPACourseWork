@@ -23,23 +23,35 @@ class Group(models.Model):
     name = models.TextField()
     priority = models.IntegerField()
     color = models.CharField(max_length=7)
-    user = models.ForeignKey('User', related_name='groups_ref', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+            'User',
+            related_name='groups_ref',
+
+            on_delete=models.CASCADE
+    )
 
     class Meta:
-        unique_together = (('id', 'name'),)
+        #unique_together = (('id', 'name'),)
         ordering = ('priority',)
 
 
 class Reference(models.Model):
     name = models.TextField()
     ref_url = models.URLField()
-    group = models.ForeignKey(Group,
-                              related_name='groups',
-                              on_delete=models.CASCADE,
-                              blank=True,
-                              null=True
-                              )
-    user = models.ForeignKey('User', related_name='references', on_delete=models.CASCADE)
+    group = models.ForeignKey(
+            Group,
+            related_name='groups',
+            on_delete=models.CASCADE,
+            blank=True,
+            null=True
+    )
+    user = models.ForeignKey(
+            'User',
+            related_name='references',
+            on_delete=models.CASCADE
+    )
 
     class Meta:
         ordering = ('id',)
+
+

@@ -18,19 +18,25 @@ class GroupViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         pk = kwargs['pk']
-        users_pk = kwargs['users_pk']
+        users_pk = kwargs['users_username']
         user = User.objects.get(username=users_pk)
         queryset = Group.objects.filter(pk=pk, user=user)
         instance = get_object_or_404(queryset, pk=pk)
+        #instance.urlr = 'aaaa'
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
     def list(self, request, *args, **kwargs):
-        users_pk = kwargs['users_pk']
+        users_pk = kwargs['users_username']
         user = User.objects.get(username=users_pk)
         queryset = Group.objects.filter(user=user)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        serializer.save(
+                user=self.request.user
+        )
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -65,7 +71,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         pk = kwargs['pk']
-        users_pk = kwargs['users_pk']
+        users_pk = kwargs['users_username']
         user = User.objects.get(username=users_pk)
         queryset = Reference.objects.filter(pk=pk, user=user)
         instance = get_object_or_404(queryset, pk=pk)
@@ -73,7 +79,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def list(self, request, *args, **kwargs):
-        users_pk = kwargs['users_pk']
+        users_pk = kwargs['users_username']
         user = User.objects.get(username=users_pk)
         queryset = Reference.objects.filter(user=user)
         serializer = self.get_serializer(queryset, many=True)
