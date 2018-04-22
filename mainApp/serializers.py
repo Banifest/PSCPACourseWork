@@ -1,15 +1,14 @@
 from rest_framework import serializers
+from rest_framework.relations import HyperlinkedIdentityField
 
 from mainApp.models import Group, Reference, User
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    # refs = serializers.HyperlinkedRelatedField(
-    #         read_only=True,
-    #         many=True,
-    #         view_name='user-refs'
-    # )
-
+    url = serializers.HyperlinkedIdentityField(
+            view_name='user-detail',
+            lookup_field='username'
+    )
     class Meta:
         model = User
         fields = ('url',
@@ -17,25 +16,41 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'first_name',
                   'last_name',
                   'email',
-                  'references',
+                  #'url',
+                  #'refs',
                   'groups',
-                  #'refs'
                   )
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Group
-        fields = ('url', 'id', 'name', 'priority', 'color')
+        fields = (
+            'id',
+            'name',
+            'priority',
+            'color',
+            'user'
+        )
 
 
 class ReferenceSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
+    user = serializers.HyperlinkedRelatedField(
+            view_name='user-detail',
+            read_only=True
+    )
 
     class Meta:
         model = Reference
-        fields = ('id', 'url', 'name', 'user', 'group')
+        fields = (
+            'id',
+            #'url',
+            'ref_url',
+            'name',
+            'user',
+            'group'
+            )
+        #lookup_field = 'user__username'
         extra_kwargs = {
             'group': {'view_name': 'group-detail'},
         }
