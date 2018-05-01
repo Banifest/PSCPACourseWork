@@ -1,7 +1,12 @@
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, renderers
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.utils import json
 
 from mainApp.permissions import permissions
 from mainApp.models import Reference, Group, User
@@ -10,7 +15,7 @@ from mainApp.serializers import ReferenceSerializer, UserSerializer, GroupSerial
 
 class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = (
-        permissions.IsAuthenticatedOrReadOnly,
+        permissions.IsAuthenticated,
     )
 
     queryset = Group.objects.all()
@@ -22,7 +27,6 @@ class GroupViewSet(viewsets.ModelViewSet):
         user = User.objects.get(username=users_pk)
         queryset = Group.objects.filter(pk=pk, user=user)
         instance = get_object_or_404(queryset, pk=pk)
-        #instance.urlr = 'aaaa'
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
@@ -39,17 +43,40 @@ class GroupViewSet(viewsets.ModelViewSet):
         )
 
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'username'
+
     permission_classes = (
-         permissions.IsAuthenticated,
     )
 
-    @action(methods=['post'], detail=True, permission_classes=[permissions.IsAuthenticated])
-    def set_password(self, request, pk=None):
-        return Response('')
+    @action(methods=['post'], detail=True, permission_classes=[permissions.AllowAny],)
+    def login(self, request, username=None):
+        user = authenticate(username=username, password=request.data['password'])
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponse(
+                        content=json.dumps({'status': 'success'}),
+                        status=201,
+                        content_type='application/json'
+                )
+            else:
+                return HttpResponse(
+                        json.dumps({'status': "don't right login or password"}),
+                        status=401,
+                        content_type='application/json'
+                )
+        else:
+            return HttpResponse(
+                    json.dumps({'status': "don't right login or password"}),
+                    status=401,
+                    content_type='application/json'
+            )
+
+    def perform_create(self, serializer):
+
         pass
 
     def retrieve(self, request, *args, **kwargs):
@@ -66,7 +93,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
     serializer_class = ReferenceSerializer
 
     permission_classes = (
-        permissions.IsAuthenticatedOrReadOnly,
+        permissions.IsAuthenticated,
     )
 
     def retrieve(self, request, *args, **kwargs):

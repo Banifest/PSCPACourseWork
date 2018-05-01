@@ -21,7 +21,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '=hvdq^!!5foyyh_9#zk$q89^z1!8b(6&68!#@8)j9(uqxoz@m7'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'mainApp.apps.MainConfig',
     'rest_framework',
     'rest_framework_swagger',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [

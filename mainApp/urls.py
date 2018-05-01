@@ -19,7 +19,7 @@ ref_router = NestedSimpleRouter(router, r'users', lookup='users')
 ref_router.register(r'references', views.ReferenceViewSet, base_name='references')
 
 urlpatterns = [
-    url(r'^api-auth/', include('rest_framework.urls')),
+    url(r'^api/users/', include('rest_framework.urls')),
     url(r'^api/', include(router.urls)),
     url(r'^api/', include(group_router.urls)),
     url(r'^api/', include(ref_router.urls)),

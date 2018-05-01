@@ -26,12 +26,11 @@ class Group(models.Model):
     user = models.ForeignKey(
             'User',
             related_name='groups_ref',
-
             on_delete=models.CASCADE
     )
 
     class Meta:
-        #unique_together = (('id', 'name'),)
+        unique_together = (('id', 'name'),)
         ordering = ('priority',)
 
 
@@ -53,5 +52,3 @@ class Reference(models.Model):
 
     class Meta:
         ordering = ('id',)
-
-
