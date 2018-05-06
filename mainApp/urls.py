@@ -19,7 +19,7 @@ ref_router.register(r'references', views.ReferenceViewSet, base_name='references
 
 urlpatterns = [
     url(r'^api/users/login', views.user_login),
-    url(r'^api/', schema_view),
+    #url(r'^api/', schema_view),
     url(r'^api/users/', include('rest_framework.urls')),
     url(r'^api/', include(router.urls)),
     url(r'^api/', include(group_router.urls)),
