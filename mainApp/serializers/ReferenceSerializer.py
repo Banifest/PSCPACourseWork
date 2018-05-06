@@ -12,7 +12,7 @@ class ReferenceSerializer(serializers.HyperlinkedModelSerializer):
 
     group = serializers.SlugRelatedField(
         slug_field='id',
-        read_only=False,  # Or add a queryset
+        read_only=False,
         queryset=Group.objects.filter().all()
     )
 
