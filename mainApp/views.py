@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets
+from rest_framework import viewsets, pagination
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.utils import json
@@ -34,8 +34,13 @@ class GroupViewSet(viewsets.ModelViewSet):
         users_pk = kwargs['users_username']
         user = User.objects.get(username=users_pk)
         queryset = Group.objects.filter(user=user)
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return Response(serializer.data)
+        else:
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
 
     def perform_create(self, serializer):
         serializer.save(
@@ -114,8 +119,13 @@ class ReferenceViewSet(viewsets.ModelViewSet):
         users_pk = kwargs['users_username']
         user = User.objects.get(username=users_pk)
         queryset = Reference.objects.filter(user=user)
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return Response(serializer.data)
+        else:
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
 
     def perform_create(self, serializer):
         try:

@@ -60,4 +60,4 @@ class ReferenceSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'user',
             'group'
-            )
+        )
