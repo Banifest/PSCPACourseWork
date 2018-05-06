@@ -21,6 +21,9 @@ class UserViewSet(viewsets.ModelViewSet):
         IsUserOwner,
     )
 
+    def list(self, request, *args, **kwargs):
+        return super().list(request, args, kwargs)
+
     def retrieve(self, request, *args, **kwargs):
         pk = kwargs['username']
         queryset = User.objects.filter(username=pk)
