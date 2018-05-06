@@ -27,10 +27,7 @@ DEBUG = True
 
 AUTH_USER_MODEL = 'mainApp.User'
 
-ALLOWED_HOSTS = [
-    'http://127.0.0.1:8000/',
-    'https://pscaserv.herokuapp.com'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
