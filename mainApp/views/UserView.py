@@ -7,10 +7,10 @@ from rest_framework import permissions, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
-from mainApp.models import Group
-from mainApp.permissions import IsOwnerObj, IsUserOwner
-from mainApp.serializers import GroupSerializer, UserSerializer
+from mainApp.permissions import IsUserOwner
+from mainApp.serializers import UserSerializer
 from mainApp.models import User
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

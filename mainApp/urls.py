@@ -1,10 +1,9 @@
 from django.conf.urls import url
-from django.urls import include, NoReverseMatch
+from django.urls import include
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedSimpleRouter
-
-NoReverseMatch()
 from mainApp import views
+
 from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title='Reference API')
 
