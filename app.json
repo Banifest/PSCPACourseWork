@@ -1,6 +1,6 @@
 {
-  "name": "Start on Heroku: Python",
-  "description": "A barebones Python app, which can easily be deployed to Heroku.",
+  "name": "Cursach PSCA",
+  "description": "Cursach PSCA.",
   "repository": "https://github.com/Banifest/PSCPACourseWork",
   "keywords": ["python", "django" ],
   "addons": [ "heroku-postgresql" ],
