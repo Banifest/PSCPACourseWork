@@ -65,7 +65,7 @@ def user_login(request):
             )
         else:
             return HttpResponse(
-                    json.dumps({'status': "don't right login or password"}),
+                    json.dumps({'detail': "don't right login or password"}),
                     status=401,
                     content_type='application/json'
             )
