@@ -1,9 +1,10 @@
 import json
 
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import permissions, viewsets
+from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
@@ -21,6 +22,18 @@ class UserViewSet(viewsets.ModelViewSet):
         IsUserOwner,
     )
 
+    @action(methods=['PATCH'], detail=True, url_path='change-password')
+    def change_password(self, request: HttpRequest, username=None):
+        user = User.objects.filter(username=username).first()
+        if user == request.user:
+            user.set_password(self.request.data['password'])
+            user.save()
+            return Response('{"status_code": "password change successful"}')
+        else:
+            res = Response('{"status_code": "bad request"}')
+            res.status_code = 400
+            return res
+
     def list(self, request, *args, **kwargs):
         return super().list(request, args, kwargs)
 
@@ -34,7 +47,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
         user = User.objects.filter(username=self.request.data['username']).first()
-        user.set_password('123')
+        user.set_password(self.request.data['password'])
         user.save()
 
 
