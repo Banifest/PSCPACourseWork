@@ -2,6 +2,8 @@ import json
 
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpRequest
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
@@ -22,20 +24,27 @@ class UserViewSet(viewsets.ModelViewSet):
         IsUserOwner,
     )
 
+    def get_permissions(self):
+        if self.action == 'create':
+            permission_classes = [permissions.AllowAny]
+        else:
+            permission_classes = [
+                IsUserOwner,
+                permissions.IsAuthenticated,
+            ]
+        return [permission() for permission in permission_classes]
+
     @action(methods=['PATCH'], detail=True, url_path='change-password')
     def change_password(self, request: HttpRequest, username=None):
         user = User.objects.filter(username=username).first()
         if user == request.user:
             user.set_password(self.request.data['password'])
             user.save()
-            return Response('{"status_code": "password change successful"}')
+            return Response('{"detail": "password change successful"}')
         else:
-            res = Response('{"status_code": "bad request"}')
+            res = Response('{"detail": "bad request"}')
             res.status_code = 400
             return res
-
-    def list(self, request, *args, **kwargs):
-        return super().list(request, args, kwargs)
 
     def retrieve(self, request, *args, **kwargs):
         pk = kwargs['username']

@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework import permissions, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -16,6 +18,10 @@ class ReferenceViewSet(viewsets.ModelViewSet):
         IsOwnerObj,
         permissions.IsAuthenticated,
     )
+    #
+    # @method_decorator(cache_page(10))
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super().dispatch(request, args, users_username=kwargs['users_username'])
 
     def retrieve(self, request, *args, **kwargs):
         pk = kwargs['pk']
