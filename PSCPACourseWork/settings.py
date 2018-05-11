@@ -140,6 +140,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+TEST_RUNNER = 'mainApp.testRunner.TestRunner'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
