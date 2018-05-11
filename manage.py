@@ -17,9 +17,6 @@ if __name__ == "__main__":
         ) from exc
 
     if 'test' in sys.argv:
-        #try:
-            execute_from_command_line(sys.argv)
-        #except OperationalError:
-        #    pass
+        execute_from_command_line(['manage.py', 'test'])
     else:
         execute_from_command_line(sys.argv)
