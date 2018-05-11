@@ -21,6 +21,7 @@ if __name__ == "__main__":
     if 'do_test' in sys.argv:
         subprocess.call('python manage.py test > o.txt 2> s.txt', shell=True)
         if 'FAILED (failures=' in open('s.txt', 'r').read():
+            print(open('s.txt', 'r').read())
             raise OperationalError()
         else:
             sys.exit(0)
