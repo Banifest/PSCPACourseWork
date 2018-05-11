@@ -2,6 +2,9 @@
 import os
 import sys
 
+import django
+from django.db import OperationalError
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PSCPACourseWork.settings")
     try:
@@ -16,7 +19,7 @@ if __name__ == "__main__":
     if 'test' in sys.argv:
         try:
             execute_from_command_line(sys.argv)
-        except:
+        except OperationalError:
             pass
     else:
         execute_from_command_line(sys.argv)
