@@ -81,29 +81,29 @@ WSGI_APPLICATION = 'PSCPACourseWork.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'TestPostgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'admin',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+#
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'TestPostgres',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': '127.0.0.1',
+        'NAME': 'd9dq414iqqsdq6',
+        'USER': 'fjuhekmgkcjjub',
+        'PASSWORD': '691bed019e26fe09418a46c3ca26e2bb28e2152bb398507ded595601eb1c40f4',
+        'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'd9dq414iqqsdq6',
-#         'USER': 'fjuhekmgkcjjub',
-#         'PASSWORD': '691bed019e26fe09418a46c3ca26e2bb28e2152bb398507ded595601eb1c40f4',
-#         'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
 
 
 # Password validation
