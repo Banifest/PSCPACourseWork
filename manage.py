@@ -26,10 +26,10 @@ if __name__ == "__main__":
         else:
             sys.exit(0)
 
-    if 'test' in sys.argv:
-        try:
-            execute_from_command_line(sys.argv)
-        except OperationalError:
-            pass
-    else:
-        execute_from_command_line(sys.argv)
+    # if 'test' in sys.argv:
+    #     try:
+    #         execute_from_command_line(sys.argv)
+    #     except OperationalError:
+    #         pass
+    # else:
+    execute_from_command_line(sys.argv)
