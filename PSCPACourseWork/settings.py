@@ -135,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-TEST_RUNNER = 'mainApp.testRunner.TestRunner'
+#TEST_RUNNER = 'mainApp.testRunner.TestRunner'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
