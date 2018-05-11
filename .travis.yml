@@ -6,7 +6,7 @@
   script:
     - python manage.py makemigrations
     - python manage.py migrate
-    - python manage.py test
+    - sudo python manage.py test
   deploy:
     provider: heroku
     api_key: 7b182a2c-0bed-443c-9395-2069d64217f7
