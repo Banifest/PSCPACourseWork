@@ -30,7 +30,7 @@ if __name__ == "__main__":
     if 'test' in sys.argv:
         try:
             execute_from_command_line(sys.argv)
-        except OperationalError as E:
+        except OperationalError:
             pass
     else:
         execute_from_command_line(sys.argv)
