@@ -9,5 +9,13 @@
       "description": "The secret key for the Django application.",
       "generator": "=hvdq^!!5foyyh_9#zk$q89^z1!8b(6&68!#@8)j9(uqxoz@m7"
     }
+  },
+  "environments": {
+    "test": {
+      "scripts": {
+        "test-setup": "python manage.py collectstatic --noinput",
+        "test": "python manage.py test"
+      }
+    }
   }
 }
