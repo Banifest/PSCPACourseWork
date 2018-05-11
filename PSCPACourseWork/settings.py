@@ -98,8 +98,8 @@ WSGI_APPLICATION = 'PSCPACourseWork.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd9dq414iqqsdq6',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'databasename.db3',
         'USER': 'fjuhekmgkcjjub',
         'PASSWORD': '691bed019e26fe09418a46c3ca26e2bb28e2152bb398507ded595601eb1c40f4',
         'HOST': 'ec2-54-83-19-244.compute-1.amazonaws.com',
