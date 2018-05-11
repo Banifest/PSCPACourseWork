@@ -46,7 +46,8 @@ class GroupTest(TestCase):
                     'color': 'RED',
                     'priority': -1
                 }, format='json')
-        self.assertEqual(response.status_code, 123)
+        self.assertEqual(response.status_code, 200)
+        raise locals()
         self.assertEqual(response.data['name'], 'NotTest')
         self.assertEqual(response.data['color'], 'RED')
         self.assertEqual(response.data['priority'], -1)
