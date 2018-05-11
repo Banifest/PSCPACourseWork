@@ -47,7 +47,7 @@ class ReferenceTest(TestCase):
 
     def test_list_ref_with_auth(self):
         response = self.client.get('/api/users/banifest/references/', format='json')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 999)
 
     def test_detail_ref_with_auth(self):
         response = self.client.get('/api/users/banifest/references/', format='json')
