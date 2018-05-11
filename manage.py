@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     if 'do_test' in sys.argv:
         if subprocess.call('python manage.py test', shell=True) == 1:
-            raise Exception()
+            raise OperationalError()
         else:
             sys.exit(0)
 
