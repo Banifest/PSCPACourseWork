@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import os
+import subprocess
 import sys
+from subprocess import call
 
 import django
 from django.db import OperationalError
@@ -15,6 +17,12 @@ if __name__ == "__main__":
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+
+    if 'do_test' in sys.argv:
+        if subprocess.call('python manage.py test', shell=True) == 1:
+            raise Exception()
+        else:
+            sys.exit(0)
 
     if 'test' in sys.argv:
         try:
