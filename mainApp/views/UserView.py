@@ -2,17 +2,14 @@ import json
 
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpRequest
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
+from mainApp.models import User
 from mainApp.permissions import IsUserOwner
 from mainApp.serializers import UserSerializer
-from mainApp.models import User
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -27,12 +24,38 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == 'create':
             permission_classes = [permissions.AllowAny]
+        elif self.action == 'login':
+            permission_classes = [permissions.AllowAny]
         else:
             permission_classes = [
                 IsUserOwner,
                 permissions.IsAuthenticated,
             ]
         return [permission() for permission in permission_classes]
+
+    @action(methods=['POST'], detail=True, url_path='login')
+    def login(self, request: HttpRequest, username=None):
+        user = authenticate(username=username, password=request.data['password'])
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponse(
+                        content=json.dumps({'status': 'success'}),
+                        status=201,
+                        content_type='application/json'
+                )
+            else:
+                return HttpResponse(
+                        json.dumps({'detail': "don't right login or password"}),
+                        status=401,
+                        content_type='application/json'
+                )
+        else:
+            return HttpResponse(
+                    json.dumps({'detail': "don't right login or password"}),
+                    status=401,
+                    content_type='application/json'
+            )
 
     @action(methods=['PATCH'], detail=True, url_path='change-password')
     def change_password(self, request: HttpRequest, username=None):
@@ -58,29 +81,3 @@ class UserViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(username=self.request.data['username']).first()
         user.set_password(self.request.data['password'])
         user.save()
-
-
-@csrf_exempt
-def user_login(request):
-    request.data = json.loads(request.body)
-    user = authenticate(username=request.data['username'], password=request.data['password'])
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return HttpResponse(
-                    content=json.dumps({'status': 'success'}),
-                    status=201,
-                    content_type='application/json'
-            )
-        else:
-            return HttpResponse(
-                    json.dumps({'detail': "don't right login or password"}),
-                    status=401,
-                    content_type='application/json'
-            )
-    else:
-        return HttpResponse(
-                json.dumps({'detail': "don't right login or password"}),
-                status=401,
-                content_type='application/json'
-        )

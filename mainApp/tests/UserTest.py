@@ -1,9 +1,6 @@
 from django.contrib.auth.models import AnonymousUser
-from django.test import TestCase, RequestFactory
-from django.urls import include, path
-from rest_framework import response, status
-from rest_framework.reverse import reverse
-from rest_framework.test import APIRequestFactory, APITestCase, URLPatternsTestCase, APIClient
+from django.test import TestCase
+from rest_framework.test import APIRequestFactory, APIClient
 
 from mainApp.models import User
 from mainApp.views import UserViewSet
@@ -25,7 +22,7 @@ class UserTest(TestCase):
     def test_list_user_without_auth(self):
         client = APIClient()
         response = client.get('/api/users/', format='json')
-        self.assertEqual(response.status_code, 4032)
+        self.assertEqual(response.status_code, 403)
 
     def test_detail_user_with_auth(self):
         client = APIClient()
