@@ -14,4 +14,4 @@ class IsOwnerObj(permissions.BasePermission):
         return request.parser_context['kwargs']['users_username'] == request.user.username
 
     def has_object_permission(self, request, view, obj):
-            return obj.user == request.user
+        return obj.user == request.user

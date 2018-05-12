@@ -77,20 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PSCPACourseWork.wsgi.application'
 
-
-#
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'TestPostgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'admin',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
-#
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -101,9 +87,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-print('test' in sys.argv)
-print(sys.argv)
 
 if 'test' in sys.argv:
     DATABASES = {
