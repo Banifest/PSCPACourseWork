@@ -25,7 +25,7 @@ class UserTest(TestCase):
     def test_list_user_without_auth(self):
         client = APIClient()
         response = client.get('/api/users/', format='json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 4032)
 
     def test_detail_user_with_auth(self):
         client = APIClient()
