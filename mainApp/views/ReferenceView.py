@@ -4,6 +4,7 @@ from rest_framework.response import Response
 
 from mainApp.models import Group, Reference
 from mainApp.models import User
+from mainApp.pagination import CustomPagination
 from mainApp.permissions import IsOwnerObj
 from mainApp.serializers import ReferenceSerializer
 
@@ -16,6 +17,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
         IsOwnerObj,
         permissions.IsAuthenticated,
     )
+    pagination_class = CustomPagination
 
     def retrieve(self, request, *args, **kwargs):
         pk = kwargs['pk']

@@ -1,17 +1,11 @@
-from django.contrib.auth.models import AnonymousUser
-from django.test import TestCase, RequestFactory
-from django.urls import include, path
-from rest_framework import response, status
-from rest_framework.reverse import reverse
-from rest_framework.test import APIRequestFactory, APITestCase, URLPatternsTestCase, APIClient
+from django.test import TestCase
+from rest_framework.test import APIRequestFactory, APIClient
 
 from mainApp.models import User, Group, Reference
-from mainApp.views import UserViewSet
 
 
 class ReferenceTest(TestCase):
     def setUp(self):
-        # Every test needs access to the request factory.
         self.factory = APIRequestFactory()
         self.user = User.objects.create_user(
                 username='banifest', email='banifest@gmail.com', password='adminadmin')

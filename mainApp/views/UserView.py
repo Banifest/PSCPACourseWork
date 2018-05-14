@@ -69,6 +69,8 @@ class UserViewSet(viewsets.ModelViewSet):
             res.status_code = 400
             return res
 
+    # @etag()
+    # @cache_response(key_func=)
     def retrieve(self, request, *args, **kwargs):
         pk = kwargs['username']
         queryset = User.objects.filter(username=pk)
@@ -81,3 +83,4 @@ class UserViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(username=self.request.data['username']).first()
         user.set_password(self.request.data['password'])
         user.save()
+        user.email_user('test', 'test')

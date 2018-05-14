@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Reference(models.Model):
     name = models.TextField()
     ref_url = models.URLField()

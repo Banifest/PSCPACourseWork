@@ -1,27 +1,18 @@
-from django.contrib.auth.models import AnonymousUser
-from django.test import TestCase, RequestFactory, Client
-from django.urls import include, path
-from rest_framework import response, status
-from rest_framework.reverse import reverse
-from rest_framework.test import APIRequestFactory, APITestCase, URLPatternsTestCase, APIClient
-from rest_framework.utils import json
+from django.test import TestCase
+from rest_framework.test import APIRequestFactory, APIClient
 
-from mainApp.models import User, Reference, Group
-from mainApp.views import UserViewSet
+from mainApp.models import User
+
 
 class GroupTest(TestCase):
     def setUp(self):
-        # Every test needs access to the request factory.
         self.factory = APIRequestFactory()
         self.user = User.objects.create_user(
                 username='banifest', email='banifest@gmail.com', password='adminadmin')
         self.client = APIClient()
         self.client.force_login(user=self.user)
-        #self.group = Group.objects.create(color='GREEN', priority=1, name='test', user=self.user)
-        #self.ref = Reference.objects.create(name='GREEN', ref_url='http://123.com', group=self.group, user=self.user)
 
     def test_detail_group_create(self):
-
         response = self.client.post(
                 '/api/users/banifest/groups/',
                 {

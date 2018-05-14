@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from mainApp.models import Group
 
 
@@ -18,5 +19,3 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
             'color',
             'user'
         )
-
-
