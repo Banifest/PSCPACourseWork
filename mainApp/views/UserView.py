@@ -83,4 +83,3 @@ class UserViewSet(viewsets.ModelViewSet):
         user = User.objects.filter(username=self.request.data['username']).first()
         user.set_password(self.request.data['password'])
         user.save()
-        user.email_user('test', 'test')
