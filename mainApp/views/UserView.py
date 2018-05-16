@@ -79,6 +79,8 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def perform_create(self, serializer):
+        if 'password' not in self.request.data or self.request.data['password'] == '':
+            res = Response('{"detail": "password is empty"}')
         serializer.save()
         user = User.objects.filter(username=self.request.data['username']).first()
         user.set_password(self.request.data['password'])
